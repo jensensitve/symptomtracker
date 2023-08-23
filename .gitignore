@@ -1,0 +1,5 @@
+/node_modules
+
+//Befehl (in Konsole ausführen) für Erstellung JWT_SECRET: node -e "console.log(crypto.randomBytes(32).toString('hex'))" 
+
+//retryWrites=true&w=majority (ENV Datenbank)
