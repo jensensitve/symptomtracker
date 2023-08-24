@@ -89,12 +89,41 @@ export async function getAllUsersController(req, res) {
   }
 }
 
-// Id des eingeloggten User---
-/* export async function getUserController(req, res) {
+// Id (und Name) des eingeloggten User---
+export async function getUserController(req, res) {
   try {
-    const User = await userModel.findOne(_id);
-    res.status(200).json(User);
+    const userId = req.user.userId; // Assuming your authentication middleware sets the userId in req.user
+    const user = await userModel.findOne({ _id: userId });
+    
+    if (user) {
+      const userName = user.name;
+      return res.status(200).json({ name: userName });
+    } else {
+      return res.status(404).json({ message: "User not found!" });
+    }
   } catch (error) {
     res.status(500).json(error);
   }
-} */
+}
+
+export async function addHealthLogController(req, res) {
+  try {
+    const { userId, date, meal, symptom, bowelMovement, time } = req.body;
+
+    const newLog = new HealthLog({
+      userId,
+      date,
+      meal,
+      symptom,
+      bowelMovement,
+      time,
+    });
+
+    const savedLog = await newLog.save();
+    res.status(201).json(savedLog);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+// Du kannst auch andere Funktionen hinzufügen, die sich auf das Abrufen und Bearbeiten von HealthLog-Einträgen beziehen
