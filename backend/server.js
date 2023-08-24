@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import connectDB from "../backend/database/connectDB.js";
 import userRouter from "../backend/routes/userRouter.js";
+import dataRouter from "../backend/routes/dataRouter.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
@@ -16,9 +17,10 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 
 app.use("/api", userRouter);
+app.use("/api", dataRouter);
 
 
 (async () => {

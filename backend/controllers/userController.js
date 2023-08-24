@@ -1,4 +1,6 @@
 import userModel from "../model/userModel.js";
+import HealthLog from "../model/healthLogModel.js";
+import { authMiddleware } from "../middleware/authMiddleware.js";
 import bcrypt from "bcrypt";
 import { createToken } from "../lib/auth.js";
 import { v4 as uuid } from 'uuid';
@@ -108,7 +110,8 @@ export async function getUserController(req, res) {
 
 export async function addHealthLogController(req, res) {
   try {
-    const { userId, date, meal, symptom, bowelMovement, time } = req.body;
+    const userId = req.user.userId; // Zugriff auf die Benutzer-ID aus dem authMiddleware
+    const { date, meal, symptom, bowelMovement, time } = req.body;
 
     const newLog = new HealthLog({
       userId,
@@ -122,8 +125,8 @@ export async function addHealthLogController(req, res) {
     const savedLog = await newLog.save();
     res.status(201).json(savedLog);
   } catch (error) {
-    res.status(500).json(error);
+    console.log(error)
+    res.status(500).json(error.message);
   }
 }
 
-// Du kannst auch andere Funktionen hinzufügen, die sich auf das Abrufen und Bearbeiten von HealthLog-Einträgen beziehen
