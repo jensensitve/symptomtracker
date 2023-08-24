@@ -90,11 +90,14 @@ export async function getAllUsersController(req, res) {
 }
 
 // Id des eingeloggten User---
-/* export async function getUserController(req, res) {
+export async function getUserController(req, res) {
   try {
     const User = await userModel.findOne(_id);
     res.status(200).json(User);
   } catch (error) {
     res.status(500).json(error);
   }
-} */
+}
+
+
+

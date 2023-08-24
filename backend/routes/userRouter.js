@@ -3,7 +3,7 @@ import express from "express";
 // import { loginUserController } from "../controllers/userController.js";
 // import { getAllUsersController } from "../controllers/userController.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
-import  * as user from "../controllers/userController.js";
+import * as user from "../controllers/userController.js";
 
 const userRouter = express.Router();
 
@@ -12,6 +12,7 @@ const userRouter = express.Router();
 userRouter.post("/user/register", user.createUserController);
 userRouter.post("/user/login", user.loginUserController);
 userRouter.get("/user/getUsers", authMiddleware, user.getAllUsersController);
+userRouter.get("/user/getUser", authMiddleware, user.getUserController);
 // userRouter.delete("/order/:id", deleteOrder);
 
 export default userRouter;
