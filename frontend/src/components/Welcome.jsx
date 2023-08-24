@@ -9,13 +9,13 @@ const Welcome = () => {
             method: "GET",
             credentials: "include", // Send cookies with the request
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.name) {
-                setUsername(data.name);
-            }
-        })
-        .catch(error => console.error("Error fetching user:", error));
+            .then(response => response.json())
+            .then(data => {
+                if (data.name) {
+                    setUsername(data.name);
+                }
+            })
+            .catch(error => console.error("Error fetching user:", error));
     }, []);
 
     return (

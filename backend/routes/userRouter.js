@@ -3,7 +3,7 @@ import express from "express";
 // import { loginUserController } from "../controllers/userController.js";
 // import { getAllUsersController } from "../controllers/userController.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
-import  * as user from "../controllers/userController.js";
+import * as user from "../controllers/userController.js";
 
 const userRouter = express.Router();
 
