@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
@@ -11,13 +9,13 @@ const Welcome = () => {
             method: "GET",
             credentials: "include", // Send cookies with the request
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.name) {
-                setUsername(data.name);
-            }
-        })
-        .catch(error => console.error("Error fetching user:", error));
+            .then(response => response.json())
+            .then(data => {
+                if (data.name) {
+                    setUsername(data.name);
+                }
+            })
+            .catch(error => console.error("Error fetching user:", error));
     }, []);
 
     return (
@@ -30,4 +28,3 @@ const Welcome = () => {
 };
 
 export default Welcome;
->>>>>>> e6cc74d4e897393fe4f6bc13b2973bbaa33b8144
