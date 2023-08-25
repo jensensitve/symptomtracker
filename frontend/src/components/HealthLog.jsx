@@ -4,7 +4,8 @@ const HealthLog = () => {
   const [mahlzeit, setMahlzeit] = useState("");
   const [symptom, setSymptom] = useState("");
   const [stuhlgang, setStuhlgang] = useState("");
-  const [uhrzeit, setUhrzeit] = useState(""); // Zustand für die Uhrzeit
+  const [zeit, setZeit] = useState("");// Zustand für die Uhrzeit
+  const [date, setDate] = useState(""); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -13,7 +14,8 @@ const HealthLog = () => {
       mahlzeit,
       symptom,
       stuhlgang,
-      date: uhrzeit, // Füge die Uhrzeit zum Datenobjekt hinzu
+      date, 
+      zeit,
     };
 
     try {
@@ -45,11 +47,19 @@ const HealthLog = () => {
           {/* Hier muss noch das Datum rein */}
     
           <label>
+            Datum:
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+             </label>
+             <label>
             Uhrzeit:
             <input
-              type="datetime-local"
-              value={uhrzeit}
-              onChange={(e) => setUhrzeit(e.target.value)}
+              type="time"
+              value={zeit}
+              onChange={(e) => setZeit(e.target.value)}
             />
           </label>
           <label>
