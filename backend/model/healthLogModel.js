@@ -12,10 +12,10 @@ const healthLogSchema = new mongoose.Schema({
       type: Date,
       required: true,
     },
-    meal: String,
+    mahlzeit: String,
     symptom: String,
-    bowelMovement: String,
-    time: String, // Angenommen, du möchtest die Uhrzeit separat speichern
+    stuhlgang: String,
+    zeit: String, // Angenommen, du möchtest die Uhrzeit separat speichern
   });
 const HealthLog = mongoose.model("HealthLog", healthLogSchema);
   
