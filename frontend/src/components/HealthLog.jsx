@@ -14,6 +14,7 @@ const HealthLog = () => {
     if (firstEintragSend || eintrag) {
       // Wenn der erste Eintrag gesendet wurde, hole die Einträge vom Server
       fetchEntries();
+
     }
   }, [firstEintragSend, eintrag]);
 
@@ -59,7 +60,7 @@ const HealthLog = () => {
       });
 
       if (response.ok) {
-        console.log("Health log erfolgreich hinzugefügt!");
+        console.log("Health log erfolgreich hinzugefügt!!");
         setFirstEintragSend(true);
         setMahlzeit("");
         setSymptom("");
@@ -90,7 +91,7 @@ const HealthLog = () => {
         console.log("Logout erfolgreich");
         navigate("/login"); // Navigiere zur Login-Seite nach dem Logout
       } else {
-      
+
         console.error("Fehler beim Logout");
       }
     } catch (error) {
@@ -147,11 +148,11 @@ const HealthLog = () => {
           <button type="submit">Senden</button>
         </form>
         <br />
-      <button className="auth-button" onClick={handleLogout}>
-        Logout
-      </button>
+        <button className="auth-button" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
-   
+
 
       {firstEintragSend && (
         <div className="log-entries">
