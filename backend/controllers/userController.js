@@ -66,7 +66,7 @@ export async function loginUserController(req, res) {
         return res
           .status(200)
           .cookie("jwt", token, { httpOnly: true })
-          .json({ msg: "login successful!" });
+          .json({ msg: "LOGIN successful!" });
       }
 
       return res
