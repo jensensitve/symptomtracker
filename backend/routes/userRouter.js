@@ -15,6 +15,8 @@ userRouter.post("/user/logout", authMiddleware, user.userLogoutController);
 userRouter.get("/user/getUsers", authMiddleware, user.getAllUsersController);
 userRouter.get("/user/getUser", authMiddleware, user.getUserController);
 userRouter.post("/user/healthlog", authMiddleware, user.addHealthLogController);
+userRouter.delete("/user/deleteHealthLogs", authMiddleware, user.deleteHealthLogController)
+
 
 
 export default userRouter;

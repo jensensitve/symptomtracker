@@ -10,12 +10,14 @@ const HealthLog = () => {
   const [date, setDate] = useState("");
   const [eintrag, setEintrag] = useState([]);
   const [firstEintragSend, setFirstEintragSend] = useState(false);
+  const [selectedEntries, setSelectedEntries] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (firstEintragSend) {
-      // Wenn der erste Eintrag gesendet wurde, hole die Einträge vom Server
+     // Nur beim ersten Rendern der Komponente ausführen
+     if (!firstEintragSend) {
       fetchEntries();
+      setFirstEintragSend(true); // Markieren Sie, dass die Einträge bereits abgerufen wurden
     }
   }, [firstEintragSend]);
 
@@ -103,6 +105,40 @@ const HealthLog = () => {
     }
   };
 
+  const handleCheckboxChange = (entryId) => {
+    if (selectedEntries.includes(entryId)) {
+      setSelectedEntries(selectedEntries.filter(id => id !== entryId));
+    } else {
+      setSelectedEntries([...selectedEntries, entryId]);
+    }
+  };
+
+  const handleDeleteSelected = async () => {
+    try {
+      const response = await fetch("/api/user/deleteHealthLogs", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ selectedEntries }),
+      });
+
+      if (response.ok) {
+        console.log("Ausgewählte Einträge wurden gelöscht!");
+        setSelectedEntries([]);
+        fetchEntries(); // Einträge neu laden
+      } else {
+        const serverAnswer = await response.text();
+        console.error("Fehler beim Löschen ausgewählter Einträge:", serverAnswer);
+      }
+    } catch (error) {
+      console.error("Fehler beim Löschen ausgewählter Einträge:", error);
+    }
+  };
+
+
+
 
   return (
     <div className="health-log-container">
@@ -159,27 +195,33 @@ const HealthLog = () => {
    
 
       {firstEintragSend && (
-        <div className="log-entries">
-          <h3>Gespeicherte Einträge:</h3>
-          <ul className="entry-list">
-            {eintrag.map((entry, index) => (
-              <li key={index} className="entry">
-                <div className="entry-date">
-                  Datum: {new Date(entry.date).toLocaleDateString('de-DE')}
-                </div>
-                <div className="entry-time">Uhrzeit: {entry.zeit}</div>
-                <div className="entry-details">
-                  <div>Mahlzeit: {entry.mahlzeit}</div>
-                  <div>Symptom: {entry.symptom}</div>
-                  <div>Stuhlgang: {entry.stuhlgang}</div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
+      <div className="log-entries">
+        <h3>Gespeicherte Einträge:</h3>
+        <ul className="entry-list">
+          {eintrag.map((entry, index) => (
+            <li key={index} className="entry">
+              <div className="entry-date">
+                Datum: {new Date(entry.date).toLocaleDateString('de-DE')}
+              </div>
+              <div className="entry-time">Uhrzeit: {entry.zeit}</div>
+              <div className="entry-details">
+                <div>Mahlzeit: {entry.mahlzeit}</div>
+                <div>Symptom: {entry.symptom}</div>
+                <div>Stuhlgang: {entry.stuhlgang}</div>
+              </div>
+              <input
+                type="checkbox"
+                checked={selectedEntries.includes(entry._id)}
+                onChange={() => handleCheckboxChange(entry._id)}
+              />
+            </li>
+          ))}
+        </ul>
+        <button onClick={handleDeleteSelected}>Ausgewählte löschen</button>
+      </div>
+    )}
+  </div>
+);
 }
 
 export default HealthLog;
