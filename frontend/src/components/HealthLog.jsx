@@ -60,7 +60,7 @@ const HealthLog = () => {
       });
 
       if (response.ok) {
-        console.log("Health log erfolgreich hinzugefügt!!");
+        console.log("Health log erfolgreich hinzugefügt!!!");
         setFirstEintragSend(true);
         setMahlzeit("");
         setSymptom("");
