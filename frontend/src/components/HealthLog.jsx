@@ -11,11 +11,11 @@ const HealthLog = () => {
   const [firstEintragSend, setFirstEintragSend] = useState(false);
 
   useEffect(() => {
-    if (firstEintragSend) {
+    if (firstEintragSend || eintrag) {
       // Wenn der erste Eintrag gesendet wurde, hole die Einträge vom Server
       fetchEntries();
     }
-  }, [firstEintragSend]);
+  }, [firstEintragSend, eintrag]);
 
   const fetchEntries = async () => {
     try {
