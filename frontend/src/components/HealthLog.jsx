@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import "../App.css"; // Importiere das Styling aus der HealthLog.css-Datei
 
 const HealthLog = () => {
@@ -9,7 +10,6 @@ const HealthLog = () => {
   const [date, setDate] = useState("");
   const [eintrag, setEintrag] = useState([]);
   const [firstEintragSend, setFirstEintragSend] = useState(false);
-<<<<<<< HEAD
   const [selectedEntries, setSelectedEntries] = useState([]);
   const navigate = useNavigate();
 
@@ -18,16 +18,8 @@ const HealthLog = () => {
      if (!firstEintragSend) {
       fetchEntries();
       setFirstEintragSend(true); // Markieren Sie, dass die Einträge bereits abgerufen wurden
-=======
-
-  useEffect(() => {
-    if (firstEintragSend || eintrag) {
-      // Wenn der erste Eintrag gesendet wurde, hole die Einträge vom Server
-      fetchEntries();
-
->>>>>>> af89cf4f789c272b0a27c6746b94c1237790016d
     }
-  }, [firstEintragSend, eintrag]);
+  }, [firstEintragSend]);
 
   const fetchEntries = async () => {
     try {
@@ -71,13 +63,16 @@ const HealthLog = () => {
       });
 
       if (response.ok) {
-        console.log("Health log erfolgreich hinzugefügt!!!");
+        console.log("Health log erfolgreich hinzugefügt!");
         setFirstEintragSend(true);
         setMahlzeit("");
         setSymptom("");
         setStuhlgang("");
         setZeit("");
         setDate("");
+
+        fetchEntries();
+
       } else {
         const serverAnswer = await response.text();
         console.error(
@@ -102,7 +97,7 @@ const HealthLog = () => {
         console.log("Logout erfolgreich");
         navigate("/login"); // Navigiere zur Login-Seite nach dem Logout
       } else {
-
+      
         console.error("Fehler beim Logout");
       }
     } catch (error) {
@@ -193,11 +188,11 @@ const HealthLog = () => {
           <button type="submit">Senden</button>
         </form>
         <br />
-        <button className="auth-button" onClick={handleLogout}>
-          Logout
-        </button>
+      <button className="auth-button" onClick={handleLogout}>
+        Logout
+      </button>
       </div>
-
+   
 
       {firstEintragSend && (
       <div className="log-entries">
@@ -214,11 +209,14 @@ const HealthLog = () => {
                 <div>Symptom: {entry.symptom}</div>
                 <div>Stuhlgang: {entry.stuhlgang}</div>
               </div>
-              <input
-                type="checkbox"
-                checked={selectedEntries.includes(entry._id)}
-                onChange={() => handleCheckboxChange(entry._id)}
-              />
+              <div className="entry-actions">
+                <input
+                  type="checkbox"
+                  checked={selectedEntries.includes(entry._id)}
+                  onChange={() => handleCheckboxChange(entry._id)}
+                />
+                <button onClick={() => handleDeleteSelected(entry._id)}>Löschen</button>
+              </div>
             </li>
           ))}
         </ul>
