@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
 import "../App.css"; // Importiere das Styling aus der HealthLog.css-Datei
 
 const HealthLog = () => {
@@ -10,14 +9,13 @@ const HealthLog = () => {
   const [date, setDate] = useState("");
   const [eintrag, setEintrag] = useState([]);
   const [firstEintragSend, setFirstEintragSend] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    if (firstEintragSend) {
+    if (firstEintragSend || eintrag) {
       // Wenn der erste Eintrag gesendet wurde, hole die Einträge vom Server
       fetchEntries();
     }
-  }, [firstEintragSend]);
+  }, [firstEintragSend, eintrag]);
 
   const fetchEntries = async () => {
     try {
@@ -68,9 +66,6 @@ const HealthLog = () => {
         setStuhlgang("");
         setZeit("");
         setDate("");
-
-        fetchEntries();
-
       } else {
         const serverAnswer = await response.text();
         console.error(
