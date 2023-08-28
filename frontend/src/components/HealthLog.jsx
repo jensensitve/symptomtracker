@@ -1,51 +1,109 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import "../App.css"; // Importiere das Styling aus der HealthLog.css-Datei
 
 const HealthLog = () => {
   const [mahlzeit, setMahlzeit] = useState("");
   const [symptom, setSymptom] = useState("");
   const [stuhlgang, setStuhlgang] = useState("");
-  const [zeit, setZeit] = useState("");// Zustand für die Uhrzeit
-  const [date, setDate] = useState(""); 
+  const [zeit, setZeit] = useState("");
+  const [date, setDate] = useState("");
+  const [eintrag, setEintrag] = useState([]);
+  const [firstEintragSend, setFirstEintragSend] = useState(false);
+
+  useEffect(() => {
+    if (firstEintragSend) {
+      // Wenn der erste Eintrag gesendet wurde, hole die Einträge vom Server
+      fetchEntries();
+    }
+  }, [firstEintragSend]);
+
+  const fetchEntries = async () => {
+    try {
+      const response = await fetch("/api/data/healthlogs", {
+        method: "GET",
+        credentials: "include",
+        body: JSON.stringify(),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+
+        setEintrag(data);
+      } else {
+        console.error("Error fetching health logs");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+
     const data = {
       mahlzeit,
       symptom,
       stuhlgang,
-      date, 
+      date,
       zeit,
     };
 
     try {
-        const response = await fetch("/api/data/healthlog", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify(data),
-        });
+      const response = await fetch("/api/data/healthlog", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(data),
+      });
 
-        if (response.ok) {
-          // Handle successful response here
-          console.log("Health log entry added successfully!");
-        } else {
-          const serverAnswer = await response.text();
-          console.error(serverAnswer, "Error adding health log entry");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
+      if (response.ok) {
+        console.log("Health log erfolgreich hinzugefügt!");
+        setFirstEintragSend(true);
+        setMahlzeit("");
+        setSymptom("");
+        setStuhlgang("");
+        setZeit("");
+        setDate("");
+      } else {
+        const serverAnswer = await response.text();
+        console.error(
+          serverAnswer,
+          "Error beim Hinzufügen von health log Einträgen"
+        );
       }
-    };
-  
-    return (
-      <div>
-        <h2>Gesundheitsprotokoll</h2>
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("api/user/logout", {
+        method: "POST",
+        credentials: "include",
+        // body: JSON.stringify(),
+      });
+
+      if (response.ok) {
+        console.log("Logout erfolgreich");
+        navigate("/login"); // Navigiere zur Login-Seite nach dem Logout
+      } else {
+      
+        console.error("Fehler beim Logout");
+      }
+    } catch (error) {
+      console.error("Fehler beim Logout:", error);
+    }
+  };
+
+
+  return (
+    <div className="health-log-container">
+      <h2>Gesundheitsprotokoll</h2>
+      <div className="form-container">
         <form onSubmit={handleSubmit}>
-          {/* Hier muss noch das Datum rein */}
-    
           <label>
             Datum:
             <input
@@ -53,8 +111,8 @@ const HealthLog = () => {
               value={date}
               onChange={(e) => setDate(e.target.value)}
             />
-             </label>
-             <label>
+          </label>
+          <label>
             Uhrzeit:
             <input
               type="time"
@@ -88,9 +146,35 @@ const HealthLog = () => {
           </label>
           <button type="submit">Senden</button>
         </form>
+        <br />
+      <button className="auth-button" onClick={handleLogout}>
+        Logout
+      </button>
       </div>
-    );
-  };
+   
 
-  
-  export default HealthLog
+      {firstEintragSend && (
+        <div className="log-entries">
+          <h3>Gespeicherte Einträge:</h3>
+          <ul className="entry-list">
+            {eintrag.map((entry, index) => (
+              <li key={index} className="entry">
+                <div className="entry-date">
+                  Datum: {new Date(entry.date).toLocaleDateString('de-DE')}
+                </div>
+                <div className="entry-time">Uhrzeit: {entry.zeit}</div>
+                <div className="entry-details">
+                  <div>Mahlzeit: {entry.mahlzeit}</div>
+                  <div>Symptom: {entry.symptom}</div>
+                  <div>Stuhlgang: {entry.stuhlgang}</div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default HealthLog;

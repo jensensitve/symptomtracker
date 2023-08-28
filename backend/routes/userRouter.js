@@ -11,6 +11,7 @@ const userRouter = express.Router();
 
 userRouter.post("/user/register", user.createUserController);
 userRouter.post("/user/login", user.loginUserController);
+userRouter.post("/user/logout", authMiddleware, user.userLogoutController);
 userRouter.get("/user/getUsers", authMiddleware, user.getAllUsersController);
 userRouter.get("/user/getUser", authMiddleware, user.getUserController);
 userRouter.post("/user/healthlog", authMiddleware, user.addHealthLogController);

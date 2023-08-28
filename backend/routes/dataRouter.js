@@ -9,6 +9,7 @@ const dataRouter = express.Router();
 
 
 dataRouter.post("/data/healthlog", authMiddleware, user.addHealthLogController);
+dataRouter.get("/data/healthlogs", authMiddleware, user.getAllForUserController);
 
 
 export default dataRouter;
