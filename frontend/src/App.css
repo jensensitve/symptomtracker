@@ -159,9 +159,3 @@ button {
   color: #02458d;
   border: 1px #02458d solid;
 }
-
-button:hover {
-  color: #02458d;
-  border: 1px red solid;
-  background-color: red;
-}
