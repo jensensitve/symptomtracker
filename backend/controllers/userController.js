@@ -166,3 +166,26 @@ export async function getAllForUserController(req, res) {
     res.status(500).json(error);
   }
 }
+
+export async function deleteHealthLogController(req, res) {
+  try {
+    const userId = req.user.userId; // Annahme: Die Benutzer-ID wird im authMiddleware festgelegt
+    const { selectedEntries } = req.body;
+
+    // Prüfen, ob der Benutzer der Eigentümer der ausgewählten Einträge ist
+    const userLogs = await HealthLog.find({ userId, _id: { $in: selectedEntries } });
+    if (userLogs.length !== selectedEntries.length) {
+      return res.status(403).json({ message: "Nicht autorisiert zum Löschen der ausgewählten Einträge" });
+    }
+
+    // Lösche die ausgewählten Einträge
+    const deletionResult = await HealthLog.deleteMany({ _id: { $in: selectedEntries } });
+    if (deletionResult.deletedCount === selectedEntries.length) {
+      res.status(200).json({ message: "Ausgewählte Einträge erfolgreich gelöscht" });
+    } else {
+      res.status(500).json({ message: "Fehler beim Löschen der ausgewählten Einträge" });
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
