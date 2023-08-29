@@ -12,10 +12,10 @@
   background-image: url("./assets/symptomtracker_background.jpg");
   background-size: cover;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  height: 90vh;
+  flex-direction: column;
+  /* align-items: center; */
+  height: 100vh;
   background-color: #f4f4f4;
 }
 
@@ -64,12 +64,12 @@ h1 {
   }
 }
 
-.background {
+/* .background {
   background-image: url("./assets/symptomtracker-background.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   min-height: 100vh;
-}
+} */
 
 .card {
   padding: 2em;
@@ -85,6 +85,8 @@ h1 {
   flex-direction: column;
   align-items: center;
   margin-top: 2rem;
+  background-image: url("./assets/symptomtracker_background.jpg");
+  background-size: repeat;
 }
 
 .form-container {

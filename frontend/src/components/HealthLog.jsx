@@ -141,7 +141,8 @@ const HealthLog = () => {
 
 
   return (
-    <div className="style-container">
+
+    <div className="health-log-container">
       <h2>Gesundheitsprotokoll</h2>
       <div className="form-container">
         <form onSubmit={handleSubmit}>
@@ -192,8 +193,6 @@ const HealthLog = () => {
         Logout
       </button>
       </div>
-   
-
       {firstEintragSend && (
       <div className="log-entries">
         <h3>Gespeicherte Einträge:</h3>
