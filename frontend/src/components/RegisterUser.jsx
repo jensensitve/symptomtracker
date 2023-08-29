@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
+
 // import axios from "axios";
 
 function RegisterUser() {
@@ -26,23 +27,23 @@ function RegisterUser() {
 
     // Führe hier den API-Aufruf zur Registrierung durch
     try {
-    const response = await fetch("/api/user/register",  {
+      const response = await fetch("/api/user/register", {
         method: "POST",
         credentials: "same-origin", //include
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(user),
-        
+
       });
-     console.log (response)
+      console.log(response)
 
       if (response.status === 201) {
         // Erfolgreich registriert, weiterleiten oder andere Aktionen durchführen
         setRegistrationSuccess(true); // Setze den Zustand auf erfolgreich
         setTimeout(() => {
-        navigate("/register"); // Passe die Zielroute an
-      }, 3000);
+          navigate("/register"); // Passe die Zielroute an
+        }, 3000);
       } else {
         console.error("Registrierung fehlgeschlagen");
       }
@@ -52,7 +53,7 @@ function RegisterUser() {
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="style-container">
       <form>
         <label>name</label>
         <input
@@ -61,7 +62,7 @@ function RegisterUser() {
             changeUserHandler("name", event.target.value)
           }
         />
-           {/* <label>customerId</label>
+        {/* <label>customerId</label>
           <input
             value={user.customerId}
             onChange={(event) =>
@@ -81,16 +82,16 @@ function RegisterUser() {
             changeUserHandler("password", event.target.value)
           }
         />
-        <button className="auth-button" onClick={(event) => submitHandler(event)}>Register</button>
+        <button variant="contained" className="auth-button" onClick={(event) => submitHandler(event)}>Register</button>
       </form>
-    {/* hier muss noch nachgebessert werden!!! */}
+      {/* hier muss noch nachgebessert werden!!! */}
       {registrationSuccess && (
         <p>Registrierung erfolgreich! <br />Gehe jetzt zum Login!</p>
-        )}
-        <Link to="/login" className="auth-button">
+      )}
+      <Link to="/login" className="auth-button">
         Login
-        </Link>
-         
+      </Link>
+
     </div>
   );
 }

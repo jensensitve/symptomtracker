@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from 'react';
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -47,7 +47,7 @@ function LoginUser() {
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="style-container">
       <form>
         <label>Username</label>
         <input

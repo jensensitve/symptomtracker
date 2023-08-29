@@ -19,7 +19,7 @@ const Welcome = () => {
     }, []);
 
     return (
-        <div>
+        <div className="style-container">
             <h1>Willkommen, {username}!</h1>
             <p>Sie sind jetzt angemeldet.</p>
             <Link to="/healthlog">Zum Gesundheitsprotokoll</Link>

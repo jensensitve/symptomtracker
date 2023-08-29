@@ -101,7 +101,7 @@ const HealthLog = () => {
 
 
   return (
-    <div className="health-log-container">
+    <div className="style-container">
       <h2>Gesundheitsprotokoll</h2>
       <div className="form-container">
         <form onSubmit={handleSubmit}>
