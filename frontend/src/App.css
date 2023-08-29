@@ -3,6 +3,8 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  color: #02458d;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
 
 /* Füge dieses CSS in eine separate Datei z.B. dashboard.css ein und importiere sie in deiner Komponente */
@@ -29,7 +31,6 @@ h1 {
   gap: 1rem;
 }
 
-
 .auth-button {
   padding: 10px 20px;
   background-color: #007bff;
@@ -45,30 +46,6 @@ h1 {
 .auth-button:hover {
   background-color: #0056b3;
 }
-
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-/* .background {
-  background-image: url("./assets/symptomtracker-background.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  min-height: 100vh;
-} */
 
 .card {
   padding: 2em;
@@ -96,6 +73,7 @@ h1 {
   padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px #02458d solid;
 }
 
 .form-container label {
@@ -137,7 +115,7 @@ h1 {
 
 .log-entries li {
   margin-bottom: 0.5rem;
-  border: 1px solid #ccc;
+  border: 1px #02458d solid;
   padding: 0.5rem;
   border-radius: 4px;
   background-color: white;
@@ -145,16 +123,16 @@ h1 {
 }
 
 .entry-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   list-style: none;
-  padding: 0;
 }
 
 .entry {
-  border: 1px solid #ccc;
   margin: 10px;
   padding: 10px;
-  display: flex;
-  flex-direction: column;
+  width: 300px;
 }
 
 .entry-date,
@@ -164,4 +142,26 @@ h1 {
 
 .entry-details {
   margin-top: 10px;
+}
+
+.entry-actions button {
+  color: #02458d;
+  border: 1px #02458d solid;
+}
+
+.entry-actions button:hover {
+  color: #02458d;
+  border: 1px red solid;
+  background-color: red;
+}
+
+button {
+  color: #02458d;
+  border: 1px #02458d solid;
+}
+
+button:hover {
+  color: #02458d;
+  border: 1px red solid;
+  background-color: red;
 }

@@ -14,8 +14,8 @@ const HealthLog = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-     // Nur beim ersten Rendern der Komponente ausführen
-     if (!firstEintragSend) {
+    // Nur beim ersten Rendern der Komponente ausführen
+    if (!firstEintragSend) {
       fetchEntries();
       setFirstEintragSend(true); // Markieren Sie, dass die Einträge bereits abgerufen wurden
     }
@@ -95,9 +95,9 @@ const HealthLog = () => {
 
       if (response.ok) {
         console.log("Logout erfolgreich");
-        navigate("/login"); // Navigiere zur Login-Seite nach dem Logout
+        navigate("/"); // Navigiere zur Login-Seite nach dem Logout
       } else {
-      
+
         console.error("Fehler beim Logout");
       }
     } catch (error) {
@@ -189,41 +189,41 @@ const HealthLog = () => {
           <button type="submit">Senden</button>
         </form>
         <br />
-      <button className="auth-button" onClick={handleLogout}>
-        Logout
-      </button>
+        <button className="auth-button" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
       {firstEintragSend && (
-      <div className="log-entries">
-        <h3>Gespeicherte Einträge:</h3>
-        <ul className="entry-list">
-          {eintrag.map((entry, index) => (
-            <li key={index} className="entry">
-              <div className="entry-date">
-                Datum: {new Date(entry.date).toLocaleDateString('de-DE')}
-              </div>
-              <div className="entry-time">Uhrzeit: {entry.zeit}</div>
-              <div className="entry-details">
-                <div>Mahlzeit: {entry.mahlzeit}</div>
-                <div>Symptom: {entry.symptom}</div>
-                <div>Stuhlgang: {entry.stuhlgang}</div>
-              </div>
-              <div className="entry-actions">
-                <input
-                  type="checkbox"
-                  checked={selectedEntries.includes(entry._id)}
-                  onChange={() => handleCheckboxChange(entry._id)}
-                />
-                <button onClick={() => handleDeleteSelected(entry._id)}>Löschen</button>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <button onClick={handleDeleteSelected}>Ausgewählte löschen</button>
-      </div>
-    )}
-  </div>
-);
+        <div className="log-entries">
+          <h3>Gespeicherte Einträge:</h3>
+          <ul className="entry-list">
+            {eintrag.map((entry, index) => (
+              <li key={index} className="entry">
+                <div className="entry-date">
+                  Datum: {new Date(entry.date).toLocaleDateString('de-DE')}
+                </div>
+                <div className="entry-time">Uhrzeit: {entry.zeit}</div>
+                <div className="entry-details">
+                  <div>Mahlzeit: {entry.mahlzeit}</div>
+                  <div>Symptom: {entry.symptom}</div>
+                  <div>Stuhlgang: {entry.stuhlgang}</div>
+                </div>
+                <div className="entry-actions">
+                  <input
+                    type="checkbox"
+                    checked={selectedEntries.includes(entry._id)}
+                    onChange={() => handleCheckboxChange(entry._id)}
+                  />
+                  <button onClick={() => handleDeleteSelected(entry._id)}>Löschen</button>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <button onClick={handleDeleteSelected}>Ausgewählte löschen</button>
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default HealthLog;
